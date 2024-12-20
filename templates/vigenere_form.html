@@ -1,0 +1,35 @@
+<div class="method-container">
+    <!-- Encrypt Container -->
+    <div class="method-box">
+        <h3>Encrypt with Vigenère Cipher</h3>
+        <form onsubmit="event.preventDefault(); submitVigenere('encrypt');" autocomplete="off">
+            <div class="mb-3">
+                <label for="encrypt-text" class="form-label">Enter Text</label>
+                <input type="text" class="form-control" id="encrypt-text" autocomplete="off" required>
+            </div>
+            <div class="mb-3">
+                <label for="encrypt-key" class="form-label">Enter Key</label>
+                <input type="text" class="form-control" id="encrypt-key" autocomplete="off" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Encrypt</button>
+        </form>
+        <p id="encrypt-result"></p>
+    </div>
+
+    <!-- Decrypt Container -->
+    <div class="method-box">
+        <h3>Decrypt with Vigenère Cipher</h3>
+        <form onsubmit="event.preventDefault(); submitVigenere('decrypt');" autocomplete="off">
+            <div class="mb-3">
+                <label for="decrypt-text" class="form-label">Enter Text</label>
+                <input type="text" class="form-control" id="decrypt-text" autocomplete="off" required>
+            </div>
+            <div class="mb-3">
+                <label for="decrypt-key" class="form-label">Enter Key</label>
+                <input type="text" class="form-control" id="decrypt-key" autocomplete="off" required>
+            </div>
+            <button type="submit" class="btn btn-secondary">Decrypt</button>
+        </form>
+        <p id="decrypt-result"></p>
+    </div>
+</div>

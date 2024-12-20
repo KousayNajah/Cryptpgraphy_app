@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptography App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* General Body Styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+             background: linear-gradient(135deg, #3a3a3a, #1e1e1e); /* Darker gray gradient */
+            backdrop-filter: blur(6px);
+        }
+
+        /* Main Container Styling */
+        .main-container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            height: 90%;
+            border: 3px solid #007bff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            background-color: rgba(52, 58, 64, 0.9);
+            color: white;
+            width: 250px;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            display: block;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .sidebar a:hover {
+            background-color: #007bff;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a.active {
+            background-color: #0056b3;
+        }
+
+        /* Content Area Styling */
+        .content {
+    flex: 1;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-left: 2px solid #007bff;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 100%; /* Constrain the content area height */
+    scrollbar-width: thin; /* For Firefox: Make the scrollbar thin */
+    scrollbar-color: #007bff #f1f1f1; /* For Firefox: Custom scrollbar colors */
+}
+
+        .content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* Styling the Method Containers */
+        .method-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-top: 40px;
+        }
+
+        .method-box {
+            width: 48%;
+            padding: 30px;
+            background-color: rgba(52, 58, 64, 0.9);
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            color: white;
+            border: none;
+        }
+
+        .method-box h3 {
+            font-size: 1.75rem;
+            margin-bottom: 20px;
+        }
+
+        .method-box input, .method-box button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .method-box button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .method-box button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Cryptography</h2>
+            <a href="#" id="cesar-link" class="active">César</a>
+            <a href="#" id="affine-link">Affine</a>
+            <a href="#" id="vigenere-link">Vigenère</a>
+            <a href="#" id="rsa-link">RSA</a>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content" id="content">
+            <h1>Welcome to Cryptography App</h1>
+            <p>Select a cipher from the sidebar to begin.</p>
+        </div>
+    </div>
+
+    <script>
+        // Dynamic content loading for sidebar links
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+
+                const cipher = this.id.replace('-link', '');
+                fetch(`/get_method_form/${cipher}`)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('content').innerHTML = data;
+                    });
+            });
+        });
+
+        // Function to handle César Cipher Encrypt/Decrypt
+        function submitCesar(action) {
+            const text = document.getElementById(`${action}-text`).value;
+            const offset = document.getElementById(`${action}-offset`).value;
+
+            fetch('/cesar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    text: text,
+                    offset: offset,
+                    action: action,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById(`${action}-result`).innerText = `Result: ${data.result}`;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+<script>
+    function submitAffine(action) {
+        const text = document.getElementById(`${action}-text`).value;
+
+        fetch('/affine', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                text: text,
+                action: action,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById(`${action}-result`).innerText = `Result: ${data.result}`;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+<script>
+    function submitVigenere(action) {
+        const text = document.getElementById(`${action}-text`).value;
+        const key = document.getElementById(`${action}-key`).value;
+
+        fetch('/vigenere', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                text: text,
+                key: key,
+                action: action,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById(`${action}-result`).innerText = `Result: ${data.result}`;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+
+<script>
+    function generateKeys() {
+        fetch('/rsa', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ action: 'generate_keys' }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            const result = `Public Key: <pre>${data.public_key}</pre><br>Private Key: <pre>${data.private_key}</pre>`;
+            document.getElementById('keys-result').innerHTML = result;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function submitRSA(action) {
+        const formData = new URLSearchParams({ action: action });
+        if (action === 'encrypt') {
+            formData.append('public_key', document.getElementById('encrypt-public-key').value);
+            formData.append('message', document.getElementById('encrypt-message').value);
+        } else if (action === 'decrypt') {
+            formData.append('private_key', document.getElementById('decrypt-private-key').value);
+            formData.append('encrypted_message', document.getElementById('decrypt-encrypted-message').value);
+        }
+
+        fetch('/rsa', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            const result = action === 'encrypt' ? 'encrypt-result' : 'decrypt-result';
+            document.getElementById(result).innerText = `Result: ${data.result || data.error}`;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+
+</body>
+</html>

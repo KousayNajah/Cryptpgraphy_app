@@ -1,0 +1,25 @@
+<div class="method-container">
+    <div class="method-box">
+        <h3>Encrypt with Affine Cipher</h3>
+        <form onsubmit="event.preventDefault(); submitAffine('encrypt');" autocomplete="off">
+            <div class="mb-3">
+                <label for="encrypt-text" class="form-label">Enter Text</label>
+                <input type="text" class="form-control" id="encrypt-text" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Encrypt</button>
+        </form>
+        <p id="encrypt-result"></p>
+    </div>
+
+    <div class="method-box">
+        <h3>Decrypt with Affine Cipher</h3>
+        <form onsubmit="event.preventDefault(); submitAffine('decrypt');" autocomplete="off">
+            <div class="mb-3">
+                <label for="decrypt-text" class="form-label">Enter Text</label>
+                <input type="text" class="form-control" id="decrypt-text" required>
+            </div>
+            <button type="submit" class="btn btn-secondary">Decrypt</button>
+        </form>
+        <p id="decrypt-result"></p>
+    </div>
+</div>

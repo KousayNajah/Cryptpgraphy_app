@@ -1,0 +1,35 @@
+<div class="method-container">
+    <!-- Encrypt Container -->
+    <div class="method-box">
+        <h3>Encrypt with César Cipher</h3>
+        <form id="cesar-encrypt-form" onsubmit="event.preventDefault(); submitCesar('encrypt');" autocomplete="off">
+            <div class="mb-3">
+                <label for="encrypt-text" class="form-label">Enter Text</label>
+                <input type="text" class="form-control" id="encrypt-text" autocomplete="off" required>
+            </div>
+            <div class="mb-3">
+                <label for="encrypt-offset" class="form-label">Enter Offset</label>
+                <input type="number" class="form-control" id="encrypt-offset" autocomplete="off" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Encrypt</button>
+        </form>
+        <p id="encrypt-result"></p>
+    </div>
+
+    <!-- Decrypt Container -->
+    <div class="method-box">
+        <h3>Decrypt with César Cipher</h3>
+        <form id="cesar-decrypt-form" onsubmit="event.preventDefault(); submitCesar('decrypt');" autocomplete="off">
+            <div class="mb-3">
+                <label for="decrypt-text" class="form-label">Enter Text</label>
+                <input type="text" class="form-control" id="decrypt-text" autocomplete="off" required>
+            </div>
+            <div class="mb-3">
+                <label for="decrypt-offset" class="form-label">Enter Offset</label>
+                <input type="number" class="form-control" id="decrypt-offset" autocomplete="off" required>
+            </div>
+            <button type="submit" class="btn btn-secondary">Decrypt</button>
+        </form>
+        <p id="decrypt-result"></p>
+    </div>
+</div>

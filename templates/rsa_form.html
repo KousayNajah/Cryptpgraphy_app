@@ -1,0 +1,48 @@
+<div class="method-container">
+    <!-- Generate Keys Container -->
+    <div class="method-box">
+        <h3>Generate RSA Keys</h3>
+        <button class="btn btn-primary w-100 mb-3" onclick="generateKeys()">Generate Keys</button>
+        <div id="keys-result" class="output-box">
+            <!-- Keys will display here -->
+        </div>
+    </div>
+
+    <!-- Encrypt Container -->
+    <div class="method-box">
+        <h3>Encrypt with RSA Cipher</h3>
+        <form id="rsa-encrypt-form" onsubmit="event.preventDefault(); submitRSA('encrypt');">
+            <div class="mb-3">
+                <label for="encrypt-public-key" class="form-label">Public Key</label>
+                <textarea class="form-control input-box" id="encrypt-public-key" rows="4" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="encrypt-message" class="form-label">Message</label>
+                <textarea class="form-control input-box" id="encrypt-message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Encrypt</button>
+        </form>
+        <div id="encrypt-result" class="output-box">
+            <!-- Encryption result will display here -->
+        </div>
+    </div>
+
+    <!-- Decrypt Container -->
+    <div class="method-box">
+        <h3>Decrypt with RSA Cipher</h3>
+        <form id="rsa-decrypt-form" onsubmit="event.preventDefault(); submitRSA('decrypt');">
+            <div class="mb-3">
+                <label for="decrypt-private-key" class="form-label">Private Key</label>
+                <textarea class="form-control input-box" id="decrypt-private-key" rows="4" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="decrypt-encrypted-message" class="form-label">Encrypted Message</label>
+                <textarea class="form-control input-box" id="decrypt-encrypted-message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-secondary w-100">Decrypt</button>
+        </form>
+        <div id="decrypt-result" class="output-box">
+            <!-- Decryption result will display here -->
+        </div>
+    </div>
+</div>
